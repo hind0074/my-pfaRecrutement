@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Offre extends Model
 {
+    protected $fillable = ['titre', 'description', 'type_contrat','location', 'date_expiration','recruteur_id'];
     public function recruteur()
     {
         return $this->belongsTo(Recruteur::class, 'recruteur_id');
@@ -18,6 +19,7 @@ class Offre extends Model
     }
     public function specialites()
     {
-        return $this->belongsToMany(Specialite::class, 'offre_specialite', 'offre_id', 'specialite_id');
+        return $this->belongsToMany(Specialite::class, 'offre_specialite', 'offre_id', 'specialite_id')->withTimestamps();
+        
     }
 }

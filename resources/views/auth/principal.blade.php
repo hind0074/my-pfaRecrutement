@@ -73,5 +73,49 @@
             </div>
         </section>
     </main>
+
+<footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Pages</h4>
+                <ul>
+                    <li><a href="#">Accueil</a></li>
+                    <li><a href="#">À propos</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Département</h4>
+                <ul>
+                    <li><a href="#">Design</a></li>
+                    <li><a href="#">Marketing</a></li>
+                    <li><a href="#">Développement</a></li>
+                    <li><a href="#">Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Niveau</h4>
+                <ul>
+                    <li><a href="#">Junior</a></li>
+                    <li><a href="#">Senior</a></li>
+                    <li><a href="#">Expert</a></li>
+                    <li><a href="#">Manager</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Localisation</h4>
+                <ul>
+                    <li><a href="#">Paris</a></li>
+                    <li><a href="#">Lyon</a></li>
+                    <li><a href="#">Marseille</a></li>
+                    <li><a href="#">Bordeaux</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; {{ date('Y') }} RecrutPro. Tous droits réservés.
+        </div>
+    </footer>
 </body>
 </html>

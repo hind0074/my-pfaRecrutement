@@ -19,7 +19,7 @@ class Candidat extends Model
 
     public function ecoles()
 {
-    return $this->belongsToMany(Ecole::class, 'candidat_ecole')
+    return $this->belongsToMany(Ecole::class, 'candidat_ecole', 'candidat_id', 'ecole_id')
                 ->withPivot('diplome', 'date_debut', 'date_fin') 
                 ->withTimestamps(); 
 }
@@ -33,4 +33,6 @@ class Candidat extends Model
     {
         return $this->hasMany(Entretien::class, 'candidat_id');
     }
+
+    
 }

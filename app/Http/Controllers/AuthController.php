@@ -105,9 +105,9 @@ class AuthController
 
         
         if ($user->type == 'candidat') {
-            return redirect()->route('register');
+            return redirect()->route('candidat.toutes.offres');
         } elseif ($user->type == 'recruteur') {
-            return redirect()->route('register');
+            return redirect()->route('toutes.offres');
         } elseif ($user->type == 'admin') {
             return redirect()->route('register');
         }
@@ -117,5 +117,15 @@ class AuthController
         return back()->withErrors(['email' => 'Identifiants incorrects']);
     }
     
+}
+
+public function logout(Request $request)
+{
+    Auth::logout(); // Déconnecte l'utilisateur
+    $request->session()->invalidate(); // Invalide la session
+    $request->session()->regenerateToken(); // Régénère le token CSRF
+
+    return redirect()->route('principal');
+ // Redirige vers la page d'accueil après la déconnexion
 }
 }
