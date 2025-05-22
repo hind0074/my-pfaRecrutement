@@ -38,7 +38,7 @@
         }
 
         .navbar .logo {
-            font-size: 1.25rem;
+            font-size: 1.30rem;
             font-weight: 600;
             color:  #0066FF;
         }
@@ -50,10 +50,11 @@
         }
 
         .nav-links a {
-            color: var(--gray-500);
+            color: black;
             text-decoration: none;
             font-size: 0.875rem;
             transition: color 0.2s;
+            font-weight: bold;
         }
 
         .nav-links a:hover {
@@ -115,7 +116,7 @@
 
         .profile-info h1 {
             font-size: 1.5rem;
-            color: var(--gray-900);
+            color: #0066FF;
             margin: 0 0 0.5rem 0;
         }
 
@@ -185,7 +186,7 @@
 
         .info-section h2 {
             font-size: 1.125rem;
-            color: var(--gray-900);
+            color:#0066FF;
             margin: 0 0 1rem 0;
             padding-bottom: 0.5rem;
             border-bottom: 1px solid var(--gray-200);
@@ -208,11 +209,12 @@
             color: var(--gray-500);
             margin-bottom: 0.25rem;
             text-transform: uppercase;
+            font-weight: bold;
         }
 
         .info-item p {
             margin: 0;
-            color: var(--gray-900);
+            color: black;
         }
 
         .company-info {
@@ -238,7 +240,7 @@
 
         .footer {
             background: var(--white);
-            padding: 2rem;
+            padding: 4rem 2rem;
             margin-top: 4rem;
             border-top: 1px solid var(--gray-200);
         }
@@ -249,13 +251,14 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 2rem;
+            margin-left: 120px;
         }
 
         .footer-section h4 {
-            font-size: 0.875rem;
+            font-size: 1rem;
             font-weight: 600;
             color: var(--gray-700);
-            margin: 0 0 0.75rem 0;
+            margin: 0 0 1rem 0;
         }
 
         .footer-section ul {
@@ -265,27 +268,35 @@
         }
 
         .footer-section li {
-            margin-bottom: 0.375rem;
+            margin-bottom: 0.5rem;
         }
 
         .footer-section a {
             color: var(--gray-500);
             text-decoration: none;
-            font-size: 0.813rem;
+            font-size: 0.875rem;
             transition: color 0.2s;
+            font-weight: bold;
         }
 
         .footer-section a:hover {
             color: var(--primary-blue);
         }
+        .specialite-search-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
 
         .copyright {
             text-align: center;
-            padding: 1.5rem;
-            color: var(--gray-500);
-            font-size: 0.813rem;
+            padding: 2rem;
+            color: #2962ff;
+            font-size: 0.875rem;
             border-top: 1px solid var(--gray-200);
-            margin-top: 1.5rem;
+            margin-top: 2rem;
+            font-weight: bold;
         }
 
         @media (max-width: 768px) {
@@ -440,21 +451,25 @@
             <a href="{{ route('recruteur.index') }}" class="{{ request()->routeIs('recruteur.index') ? 'active' : '' }}">Mes Offres</a>
             <form method="POST" action="{{ route('logout') }}" style="display:inline;">
                 @csrf
-                <button type="submit" style="background:none; border:none; color:var(--gray-500); cursor:pointer; font-size:0.875rem;">
-                    Déconnexion
+                <button type="submit" style="background:none; border:none; color:black; cursor:pointer; font-size:0.875rem; font-weight: bold;">
+                Déconnexion
                 </button>
             </form>
-            <a href="{{ route('offres.create') }}" class="post-job-btn">Poster une offre</a>
+            <a href="{{ route('offres.create') }}" class="post-job-btn">Annoncer</a>
         </div>
     </nav>
 
     <div class="container">
         <div class="profile-header">
             <div class="profile-photo">
-                @php
-                 $photo = $user->photo_profil 
-                @endphp
-            <img src="{{ asset('http://localhost/my-pfaRecrutement/public/storage/' . $user->photo_profil) }}" alt="photo de profil">
+            @php
+    if ($user->photo_profil) {
+        $photo =  'storage/'.$user->photo_profil;
+    } else {
+        $photo = 'images/imgDef.jpg';
+    }
+    @endphp
+           <img src="{{ 'http://localhost/my-pfaRecrutement/public/' . $photo}}" alt="photo de profil">
               
             </div>
             <div class="profile-info">
@@ -464,8 +479,8 @@
                     <span>{{ $user->contact_phone }}</span>
                 </div>
                 <div class="profile-actions">
-                    <a href="{{ route('recruteur.edit') }}" class="btn btn-primary">Modifier mon profil</a>
-                    <a href="#" class="btn btn-secondary" onclick="togglePasswordForm(event)">Modifier le mot de passe</a>
+                    <a href="{{ route('recruteur.edit') }}" class="btn btn-primary" style="font-weight: bold;">Modifier mon profil</a>
+                    <a href="#" class="btn btn-secondary" onclick="togglePasswordForm(event)" style="font-weight: bold;">Modifier le mot de passe</a>
                     <div id="overlay"></div> <!-- Fond flou -->
 
 <div id="passwordForm">

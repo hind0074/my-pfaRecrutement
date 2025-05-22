@@ -50,10 +50,11 @@
         }
 
         .nav-links a {
-            color: var(--gray-500);
+            color: black;
             text-decoration: none;
             font-size: 0.875rem;
             transition: color 0.2s;
+            font-weight: bold;
         }
 
         .nav-links a:hover {
@@ -98,9 +99,10 @@
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: 500;
+            font-weight: bold;
             color: var(--gray-700);
             font-size: 0.875rem;
+            
         }
 
         .form-group input[type="text"],
@@ -189,6 +191,7 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 2rem;
+            margin-left: 120px;
         }
 
         .footer-section h4 {
@@ -213,21 +216,28 @@
             text-decoration: none;
             font-size: 0.875rem;
             transition: color 0.2s;
+            font-weight: bold;
         }
 
         .footer-section a:hover {
             color: var(--primary-blue);
         }
+        .specialite-search-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
 
         .copyright {
             text-align: center;
             padding: 2rem;
-            color: var(--gray-500);
+            color: #2962ff;
             font-size: 0.875rem;
             border-top: 1px solid var(--gray-200);
             margin-top: 2rem;
+            font-weight: bold;
         }
-
         @media (max-width: 768px) {
             .nav-links {
                 display: none;
@@ -302,6 +312,8 @@
             margin: 0 auto 1rem;
         }
 
+        
+
     </style>
 </head>
 <body>
@@ -321,11 +333,11 @@
 
             <form method="POST" action="{{ route('logout') }}" style="display:inline;">
                 @csrf
-                <button type="submit" style="background:none; border:none; color:var(--gray-500); cursor:pointer; font-size:0.875rem;">
+                <button type="submit" style="background:none; border:none; color:black ; cursor:pointer; font-size:0.875rem; font-weight: bold;">
                     Déconnexion
                 </button>
             </form>
-            <a href="{{ route('offres.create') }}" class="post-job-btn">Poster une offre</a>
+            <a href="{{ route('offres.create') }}" class="post-job-btn">Annoncer</a>
         </div>
     </nav>
 <div class="hero-section">
@@ -338,7 +350,6 @@
 
     <div class="form-section">
         
-        <h1>Créer une nouvelle offre</h1>
 
         <form action="{{ route('offres.store') }}" method="POST">
             @csrf

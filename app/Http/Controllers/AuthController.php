@@ -109,7 +109,7 @@ class AuthController
         } elseif ($user->type == 'recruteur') {
             return redirect()->route('toutes.offres');
         } elseif ($user->type == 'admin') {
-            return redirect()->route('register');
+            return redirect()->route('Adm.admin');
         }
     }
 

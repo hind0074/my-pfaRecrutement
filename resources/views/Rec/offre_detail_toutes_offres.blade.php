@@ -46,7 +46,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 1.25rem;
+            font-size: 1.30rem;
             font-weight: 600;
             color:  #0066FF;
         }
@@ -58,10 +58,11 @@
         }
 
         .nav-links a {
-            color: var(--gray-500);
+            color: black;
             text-decoration: none;
             font-size: 0.875rem;
             transition: color 0.2s;
+            font-weight: bold;
         }
 
         .nav-links a:hover {
@@ -108,10 +109,11 @@
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            color: var(--gray-500);
+            color: #0066FF;
             text-decoration: none;
             margin-bottom: 2rem;
-            font-size: 0.875rem;
+            font-size: 1rem;
+            font-weight: bold;
         }
 
         .back-button:hover {
@@ -154,12 +156,14 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            font-weight: bold;
         }
 
         .job-description {
             margin: 2rem 0;
             line-height: 1.6;
             color: var(--gray-600);
+            
         }
 
         .specialites {
@@ -175,6 +179,7 @@
             padding: 0.5rem 1rem;
             border-radius: 9999px;
             font-size: 0.875rem;
+            font-weight: bold;
         }
 
         .action-buttons {
@@ -265,10 +270,11 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 2rem;
+            margin-left: 120px;
         }
 
         .footer-section h4 {
-            font-size: 0.875rem;
+            font-size: 1rem;
             font-weight: 600;
             color: var(--gray-700);
             margin: 0 0 1rem 0;
@@ -289,20 +295,29 @@
             text-decoration: none;
             font-size: 0.875rem;
             transition: color 0.2s;
+            font-weight: bold;
         }
 
         .footer-section a:hover {
             color: var(--primary-blue);
         }
+        .specialite-search-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
 
         .copyright {
             text-align: center;
             padding: 2rem;
-            color: var(--gray-500);
+            color: #2962ff;
             font-size: 0.875rem;
             border-top: 1px solid var(--gray-200);
             margin-top: 2rem;
+            font-weight: bold;
         }
+
 
         @media (max-width: 768px) {
             .container {
@@ -331,6 +346,45 @@
                 grid-template-columns: 1fr;
             }
         }
+        .job-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #eff6ff;
+  border-radius: 25%;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 15px;
+}
+
+.side-panel h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #111827;
+}
+
+.job-desc {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-bottom: 16px;
+}
+
+.cta-main {
+  display: inline-block;
+  background-color: #2563eb;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.cta-main:hover {
+  background-color: #1e40af;
+}
     </style>
 </head>
 <body>
@@ -346,11 +400,11 @@
             <a href="{{ route('recruteur.index') }}" >Mes Offres</a>
             <form method="POST" action="{{ route('logout') }}" style="display:inline;">
                 @csrf
-                <button type="submit" style="background:none; border:none; color:var(--gray-500); cursor:pointer; font-size:0.875rem;">
+                <button type="submit" style="background:none; border:none; color:black; cursor:pointer; font-size:0.875rem; font-weight: bold;">
                     Déconnexion
                 </button>
             </form>
-            <a href="{{ route('offres.create') }}" class="post-job-btn">Poster une offre</a>
+            <a href="{{ route('offres.create') }}" class="post-job-btn">Annoncer</a>
         </div>
     </nav>
 
@@ -416,10 +470,10 @@
 
             <div class="job-meta">
                 <div class="job-meta-item">
-                    <strong>Publié:</strong> {{ $offre->created_at->diffForHumans() }}
+                    <span>Publié:</span> {{ $offre->created_at->diffForHumans() }}
                 </div>
                 <div class="job-meta-item">
-                    <strong>Date d'expiration:</strong> {{ \Carbon\Carbon::parse($offre->date_expiration)->format('d/m/Y') }}
+                    <span>Date d'expiration:</span> {{ \Carbon\Carbon::parse($offre->date_expiration)->format('d/m/Y') }}
                 </div>
             </div>
 
@@ -427,12 +481,26 @@
         </div>
 
         <div class="side-panel">
-            <h3>Postez une offre aujourd'hui</h3>
-            <p>Publiez une offre pour trouver des talents.</p>
-            <button onclick="window.location.href='{{ route('offres.create') }}'" class="post-job-large">
-                Poster une offre
-            </button>
-        </div>
+  <!-- Icône -->
+  <div class="job-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="#2563eb">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M16 7V5a2 2 0 00-2-2H10a2 2 0 00-2 2v2M4 7h16v12a2 2 0 01-2 2H6a2 2 0 01-2-2V7z" />
+    </svg>
+  </div>
+
+  <!-- Titre -->
+  <h3>Postez une offre aujourd'hui</h3>
+
+  <!-- Description -->
+  <p class="job-desc">Publiez une offre pour trouver des talents.</p>
+
+  <!-- Bouton principal -->
+  <a href="{{ route('offres.create') }}" class="cta-main" style="font-weight: bold;">Annoncer </a>
+
+  
+  
+</div>
     </div>
 
     <footer class="footer">

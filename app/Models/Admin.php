@@ -10,6 +10,10 @@ class Admin extends Model
     public $incrementing = false;
     protected $keyType = 'int';
     protected $fillable = [
+        'nom',
+        'contact_phone',
+        'photo_profil',
+        'email',
         'user_id',
     ];
     public function user()

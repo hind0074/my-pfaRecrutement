@@ -13,6 +13,7 @@ class Entretien extends Model
         'date_heure',
         'etat',
         'message', 
+        'offre_id',
     ];
 
     public function recruteur()
@@ -25,4 +26,14 @@ class Entretien extends Model
     {
         return $this->belongsTo(Candidat::class, 'candidat_id');
     }
+    public function getOffre()
+    {
+        // Accéder au Candidat via la relation, puis aux Offres associées
+        return $this->candidat->offres()->first(); // Utilise `first()` pour récupérer la première offre associée
+    }
+    public function offre()
+    {
+        return $this->belongsTo(offre::class, 'offre_id');
+    }
+    
 }

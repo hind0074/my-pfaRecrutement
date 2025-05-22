@@ -47,7 +47,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 1.25rem;
+            font-size: 1.30rem;
             font-weight: 600;
             color:  #0066FF;
         }
@@ -59,10 +59,11 @@
         }
 
         .nav-links a {
-            color: var(--gray-500);
+            color: black;
             text-decoration: none;
             font-size: 0.875rem;
             transition: color 0.2s;
+            font-weight: bold;
         }
 
         .nav-links a:hover {
@@ -125,7 +126,7 @@
         .form-section-title {
             font-size: 1rem;
             font-weight: 600;
-            color: var(--gray-800);
+            color: #0066FF;
             margin-bottom: 1.25rem;
             padding-bottom: 0.75rem;
             border-bottom: 2px solid var(--gray-100);
@@ -256,7 +257,7 @@
       
         .footer {
             background: var(--white);
-            padding: 3rem 2rem;
+            padding: 4rem 2rem;
             margin-top: 4rem;
             border-top: 1px solid var(--gray-200);
         }
@@ -266,14 +267,15 @@
             margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 3rem;
+            gap: 2rem;
+            margin-left: 120px;
         }
 
         .footer-section h4 {
             font-size: 1rem;
             font-weight: 600;
-            color: var(--gray-800);
-            margin-bottom: 1.25rem;
+            color: var(--gray-700);
+            margin: 0 0 1rem 0;
         }
 
         .footer-section ul {
@@ -283,27 +285,34 @@
         }
 
         .footer-section li {
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.5rem;
         }
 
         .footer-section a {
-            color: var(--gray-600);
+            color: var(--gray-500);
             text-decoration: none;
             font-size: 0.875rem;
             transition: color 0.2s;
+            font-weight: bold;
         }
 
         .footer-section a:hover {
             color: var(--primary-blue);
         }
-
+        .specialite-search-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
         .copyright {
             text-align: center;
-            padding: 1.5rem;
-            color: var(--gray-500);
+            padding: 2rem;
+            color: #2962ff;
             font-size: 0.875rem;
             border-top: 1px solid var(--gray-200);
             margin-top: 2rem;
+            font-weight: bold;
         }
 
         @media (max-width: 1024px) {
@@ -373,11 +382,11 @@
             <a href="{{ route('recruteur.index') }}">Mes Offres</a>
             <form method="POST" action="{{ route('logout') }}" style="display:inline;">
                 @csrf
-                <button type="submit" style="background:none; border:none; color:var(--gray-500); cursor:pointer; font-size:0.875rem;">
+                <button type="submit" style="background:none; border:none; color:var(--gray-500); cursor:pointer; font-size:0.875rem; font-weight: bold;">
                     Déconnexion
                 </button>
             </form>
-            <a href="{{ route('offres.create') }}" class="post-job-btn">Poster une offre</a>
+            <a href="{{ route('offres.create') }}" class="post-job-btn">Annoncer</a>
         </div>
     </nav>
 
@@ -498,18 +507,11 @@
             </div>
 
             <div class="btn-group">
-                <button type="submit" class="btn btn-primary">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
-                        <polyline points="17 21 17 13 7 13 7 21"/>
-                        <polyline points="7 3 7 8 15 8"/>
-                    </svg>
+                <button type="submit" class="btn btn-primary" style="font-weight: bold;">
                     Mettre à jour mon profil
                 </button>
-                <a href="{{ route('recruteur.profil') }}" class="btn btn-secondary">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M19 12H5M12 19l-7-7 7-7"/>
-                    </svg>
+                <a href="{{ route('recruteur.profil') }}" class="btn btn-secondary"  style="font-weight: bold;">
+                   
                     Annuler
                 </a>
             </div>

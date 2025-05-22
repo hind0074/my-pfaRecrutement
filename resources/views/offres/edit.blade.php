@@ -35,7 +35,7 @@
         }
 
         .navbar .logo {
-            font-size: 1.25rem;
+            font-size: 1.30rem;
             font-weight: 600;
             color:  #0066FF;
         }
@@ -47,10 +47,11 @@
         }
 
         .nav-links a {
-            color: var(--gray-500);
+            color:black;
             text-decoration: none;
             font-size: 0.875rem;
             transition: color 0.2s;
+            font-weight: bold;
         }
 
         .nav-links a:hover {
@@ -121,7 +122,7 @@
         .form-group label {
             display: block;
             font-size: 0.900rem;
-            font-weight: 500;
+            font-weight: bold;
             color: var(--gray-700);
             margin-bottom: 0.375rem;
         }
@@ -237,8 +238,8 @@
 
         .footer {
             background: var(--white);
-            padding: 2rem;
-            margin-top: 2rem;
+            padding: 4rem 2rem;
+            margin-top: 4rem;
             border-top: 1px solid var(--gray-200);
         }
 
@@ -248,13 +249,14 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 2rem;
+            margin-left: 120px;
         }
 
         .footer-section h4 {
-            font-size: 0.875rem;
+            font-size: 1rem;
             font-weight: 600;
             color: var(--gray-700);
-            margin: 0 0 0.75rem 0;
+            margin: 0 0 1rem 0;
         }
 
         .footer-section ul {
@@ -264,28 +266,37 @@
         }
 
         .footer-section li {
-            margin-bottom: 0.375rem;
+            margin-bottom: 0.5rem;
         }
 
         .footer-section a {
             color: var(--gray-500);
             text-decoration: none;
-            font-size: 0.813rem;
+            font-size: 0.875rem;
             transition: color 0.2s;
+            font-weight: bold;
         }
 
         .footer-section a:hover {
             color: var(--primary-blue);
         }
+       
 
         .copyright {
             text-align: center;
-            padding: 1.5rem;
-            color: var(--gray-500);
-            font-size: 0.813rem;
+            padding: 2rem;
+            color: #2962ff;
+            font-size: 0.875rem;
             border-top: 1px solid var(--gray-200);
-            margin-top: 1.5rem;
+            margin-top: 2rem;
+            font-weight: bold;
         }
+        .specialite-search-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
 
         @media (max-width: 768px) {
             .form-grid {
@@ -329,20 +340,18 @@
             <a href="{{ route('recruteur.index') }}" class="active">Mes Offres</a>
             <form method="POST" action="{{ route('logout') }}" style="display:inline;">
                 @csrf
-                <button type="submit" style="background:none; border:none; color:var(--gray-500); cursor:pointer; font-size:0.875rem;">
+                <button type="submit" style="background:none; border:none; color:var(--gray-500); cursor:pointer; font-size:0.875rem; font-weight: bold;">
                     Déconnexion
                 </button>
             </form>
-            <a href="{{ route('offres.create') }}" class="post-job-btn">Poster une offre</a>
+            <a href="{{ route('offres.create') }}" class="post-job-btn">Annoncer</a>
         </div>
     </nav>
-
     <div class="container">
         <div class="form-header">
         <h1>Mettez à jour les détails de votre offre ici</h1>
         </div>
         
-
         <div class="form-section">
             <form action="{{ route('offres.update', $offre->id) }}" method="POST">
                 @csrf
@@ -399,8 +408,8 @@
                 </div>
 
                 <div class="actions">
-                    <a href="{{ route('recruteur.index') }}" class="btn cancel-btn">Annuler</a>
-                    <button type="submit" class="btn submit-btn">Enregistrer les modifications</button>
+                    <a href="{{ route('recruteur.index') }}" class="btn cancel-btn" style=" font-weight: bold;" >Annuler</a>
+                    <button type="submit" class="btn submit-btn" style=" font-weight: bold;" >Enregistrer les modifications</button>
                 </div>
             </form>
         </div>

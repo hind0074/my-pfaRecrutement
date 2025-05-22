@@ -6,6 +6,9 @@ use App\Models\Candidat;
 use App\Models\Specialite;  // Assure-toi que tu as bien ce modèle
 use App\Models\Categorie; 
 use App\Models\Recruteur; 
+use App\Models\User; 
+use App\Models\Entretien; 
+use App\Models\Candidature; 
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -123,6 +126,7 @@ class OffreController
             'location' => $request->location,
             'date_expiration' => $request->date_expiration,
             'recruteur_id' => auth()->user()->id,  // Associer l'ID de l'utilisateur connecté
+            'statut' => 'en attente'
         ]);
 
         // Associer les spécialités sélectionnées à l'offre
@@ -153,17 +157,52 @@ class OffreController
 
 
 
-    public function showExpiredOffers()
-    {
-        $recruteur = Recruteur::where('user_id', auth()->user()->id)->first();
-    
-        // Offres expirées liées à ce recruteur uniquement
-        $offres = Offre::where('recruteur_id', $recruteur->user_id)
-            ->where('date_expiration', '<', Carbon::now())
-            ->get();
-    
-        return view('offres.expirees', compact('offres'));
+public function showExpiredOffers(Request $request)
+{
+    $recruteur = Recruteur::where('user_id', auth()->user()->id)->first();
+    $logo = $recruteur->logo;
+
+    $categories = Categorie::all();
+    $specialites = Specialite::all();
+
+    // Requête de base : offres expirées liées à ce recruteur uniquement
+    $offresQuery = Offre::where('recruteur_id', $recruteur->user_id)
+        ->where('date_expiration', '<', Carbon::now());
+
+    // 🔍 Recherche par description
+    if ($request->filled('titre')) {
+        $offresQuery->where('description', 'LIKE', '%' . $request->titre . '%');
     }
+
+    // 🔍 Recherche par type de contrat
+    if ($request->filled('type_contrat')) {
+        $offresQuery->where('type_contrat', $request->type_contrat);
+    }
+
+    // 🔍 Recherche par spécialité
+    if ($request->filled('specialite')) {
+        $offresQuery->whereHas('specialites', function ($query) use ($request) {
+            $query->where('id', $request->specialite);
+        });
+    }
+
+    // 🔍 Recherche par catégorie (via la relation spécialités)
+    if ($request->filled('categorie')) {
+        $offresQuery->whereHas('specialites', function ($query) use ($request) {
+            $query->where('categorie_id', $request->categorie);
+        });
+    }
+
+    $offres = $offresQuery->get();
+
+    return view('offres.expirees', [
+        'offres' => $offres,
+        'logo' => $logo,
+        'categories' => $categories,
+        'specialites' => $specialites
+    ]);
+}
+
     
     public function edit($id)
     {
@@ -228,7 +267,13 @@ public function showRecruteurCandidatures()
         ->with('candidats')
         ->get();
 
-    return view('candidatures.index', compact('offres'));
+    $entretiens = Entretien::with(['candidat.user', 'offre'])
+    ->where('recruteur_id', auth()->id()) // adapte selon ta relation
+    ->where('date_heure', '>=', Carbon::now())
+    ->orderBy('date_heure', 'asc')
+    ->get();
+    
+    return view('candidatures.index', compact('offres','entretiens'));
 }
 
 
@@ -247,7 +292,20 @@ public function showCandidatCandidatures()
         ->withPivot('date_postulation', 'etat', 'cv') // Si tu veux inclure les données de la table pivot
         ->get();
 
-    return view('candidatures.Candidat_candidature', compact('offres'));
+
+    $user = User::find(auth()->id());
+    $entretiens = Entretien::where('candidat_id', $user->id)
+        ->where('etat', 'Planifié')
+        ->where('date_heure', '>=', now())
+        ->with('offre') 
+        ->get();
+
+    $candidaturesRefusees = Candidature::where('candidat_id', $user->id)
+        ->where('etat', 'Refusé')
+        ->with('offre') 
+        ->get();
+
+    return view('candidatures.Candidat_candidature', compact('offres','entretiens','candidaturesRefusees'));
 }
 
 

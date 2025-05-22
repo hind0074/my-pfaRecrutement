@@ -2,8 +2,8 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>RecrutPro - Recruteur</title>
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <title>RecrutPro - Offres Expirées</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary-blue: #0066FF;
@@ -38,9 +38,9 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 1.25rem;
+            font-size: 1.30rem;
             font-weight: 600;
-            color:  #0066FF;
+            color: #0066FF;
         }
 
         .nav-links {
@@ -50,18 +50,25 @@
         }
 
         .nav-links a {
-            color: var(--gray-500);
+            color: black;
             text-decoration: none;
             font-size: 0.875rem;
             transition: color 0.2s;
+            font-weight: bold;
         }
 
         .nav-links a:hover {
             color: var(--gray-700);
         }
 
+        .nav-links a.active {
+    color: var(--primary-blue) !important;
+    font-weight: bold;
+}
+
+
         .post-job-btn {
-            background: var(--primary-blue);
+            background:  #0066FF;
             color: var(--white) !important;
             padding: 0.5rem 1rem;
             border-radius: 5rem;
@@ -70,13 +77,19 @@
             transition: background-color 0.2s;
         }
 
-
         .post-job-btn:hover {
             background: var(--hover-blue);
         }
 
+        
         .hero-section {
-            background: var(--light-blue);
+            width: 100%; /* La largeur sera de 100% de l'écran (ou de son parent) */
+    height: 25vh; /* La hauteur est définie à 50% de la hauteur de l'écran */
+    background: linear-gradient(rgba(41, 98, 255, 0.9), rgba(30, 136, 229, 0.9)), 
+                url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1920&q=80');
+    background-size: cover; /* L'image s'adapte à la taille du conteneur */
+    background-position: center; /* Centrer l'image */
+    background-repeat: no-repeat; /* Éviter de répéter l'image */
             padding: 4rem 0;
             text-align: center;
         }
@@ -89,16 +102,17 @@
 
         .hero-content h1 {
             font-size: 2.5rem;
-            color: var(--gray-700);
+            color:white;
             margin-bottom: 1rem;
             font-weight: 600;
         }
 
         .hero-content p {
-            color: var(--gray-500);
+            color: white;
             font-size: 1.125rem;
             max-width: 600px;
             margin: 0 auto 2rem;
+            font-weight: bold;
         }
 
         .search-container {
@@ -118,7 +132,7 @@
 
         .search-form {
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr 1fr;
             gap: 1rem;
             align-items: center;
         }
@@ -196,7 +210,6 @@
             background-size: 1.5em 1.5em;
             padding-right: 2.5rem;
         }
-
         .main-content {
             max-width: 1200px;
             margin: 4rem auto 0;
@@ -223,44 +236,22 @@
             text-decoration: none;
             transition: all 0.2s;
         }
-
         .category-tag:hover {
             border-color: var(--primary-blue);
             color: var(--primary-blue);
         }
 
-        .jobs-container {
+        .jobs-grid {
             display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 2rem;
-        }
-
-        .jobs-list {
-            background: var(--white);
-            padding: 1.5rem;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-
-        .jobs-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .jobs-header h2 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--gray-700);
-            margin: 0;
+            grid-template-columns: repeat(auto-fill, minmax(300px,1320px));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
         }
 
         .job-card {
             border: 1px solid var(--gray-200);
             border-radius: 0.75rem;
             padding: 1.5rem;
-            margin-bottom: 1rem;
             transition: all 0.2s;
             background: var(--white);
         }
@@ -306,47 +297,11 @@
             border-top: 1px solid var(--gray-200);
         }
 
-        .job-type {
-            color: var(--gray-500);
-            font-size: 0.875rem;
-        }
-
         .view-job-btn {
             color: var(--primary-blue);
             text-decoration: none;
             font-size: 0.875rem;
-            font-weight: 500;
-        }
-
-        .side-panel {
-            background: var(--white);
-            padding: 1.5rem;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            height: fit-content;
-        }
-
-        .side-panel h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--gray-700);
-            margin: 0 0 1rem 0;
-        }
-
-        .post-job-large {
-            width: 100%;
-            padding: 0.75rem;
-            background: var(--primary-blue);
-            color: var(--white);
-            border: none;
-            border-radius: 0.5rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        .post-job-large:hover {
-            background: var(--hover-blue);
+            font-weight: bold;
         }
 
         .footer {
@@ -362,6 +317,7 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 2rem;
+            margin-left: 120px;
         }
 
         .footer-section h4 {
@@ -386,25 +342,26 @@
             text-decoration: none;
             font-size: 0.875rem;
             transition: color 0.2s;
+            font-weight: bold;
         }
 
         .footer-section a:hover {
             color: var(--primary-blue);
         }
-        .specialite-search-group {
-            display: flex;
-            gap: 1rem;
-            align-items: center;
-        }
-
 
         .copyright {
             text-align: center;
             padding: 2rem;
-            color: var(--gray-500);
+            color: #2962ff;
             font-size: 0.875rem;
             border-top: 1px solid var(--gray-200);
             margin-top: 2rem;
+            font-weight: bold;
+        }
+
+        .nav-links a.active {
+            color: var(--primary-blue) !important;
+            font-weight: 600;
         }
 
         @media (max-width: 768px) {
@@ -434,9 +391,13 @@
                 grid-template-columns: 1fr;
             }
         }
-        .nav-links a.active {
-    color: var(--primary-blue) !important;
-    font-weight: 600;}
+        
+        .specialite-search-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
     </style>
 </head>
 <body>
@@ -445,45 +406,88 @@
             <span>RecrutPro</span>
         </div>
         <div class="nav-links">
-            <a href="{{ route('toutes.offres') }}">Accueil</a>
-            <a href="{{ route('entreprises.index') }}">Entreprises</a>
-            <a href="{{ route('recruteur.profil') }}">Mon Profil</a>
-            <a href="{{ route('candidatures.index') }}">Candidatures</a>
-            <a href="{{ route('recruteur.index') }}" class="active" >Mes Offres</a>
+            <a href="{{ route('toutes.offres') }}" class="{{ request()->routeIs('toutes.offres') ? 'active' : '' }}">Accueil</a>
+            <a href="{{ route('entreprises.index') }}" class="{{ request()->routeIs('entreprises.index') ? 'active' : '' }}">Entreprises</a>
+            <a href="{{ route('recruteur.profil') }}" class="{{ request()->routeIs('recruteur.profil') ? 'active' : '' }}">Mon Profil</a>
+            <a href="{{ route('candidatures.index') }}" class="{{ request()->routeIs('candidatures.index') ? 'active' : '' }}">Candidatures</a>
+            <a href="{{ route('recruteur.index') }}" class="active">Mes Offres</a>
             <form method="POST" action="{{ route('logout') }}" style="display:inline;">
                 @csrf
-                <button type="submit" style="background:none; border:none; color:var(--gray-500); cursor:pointer; font-size:0.875rem;">
+                <button type="submit" style="background:none; border:none; color:black; cursor:pointer; font-size:0.875rem; font-weight: bold;">
                     Déconnexion
                 </button>
             </form>
-            <a href="{{ route('offres.create') }}" class="post-job-btn">Poster une offre</a>
+            <a href="{{ route('offres.create') }}" class="post-job-btn">Annoncer</a>
         </div>
     </nav>
-    <div class="container">
-        <h1 class="mb-4">Offres Expirées</h1>
 
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1>Offres Expirées</h1>
+            <p>Consultez et gérez vos offres d'emploi expirées</p>
+        </div>
+    </div>
+
+    <div class="search-container">
+        <div class="search-section">
+            <form class="search-form" method="GET" action="{{ route('offres.expirees') }}">
+                <div class="search-input">
+                    <input type="text" name="titre" placeholder="Rechercher une offre..." value="{{ request('titre') }}">
+                   
+                </div>
+                <select name="categorie">
+            <option value="">Catégorie</option>
+            @foreach ($categories as $categorie)
+                <option value="{{ $categorie->id }}" {{ request('categorie') == $categorie->id ? 'selected' : '' }}>
+                    {{ $categorie->nom }}
+                </option>
+            @endforeach
+         </select>
+
+                <div class="specialite-search-group">
+                <select name="specialite">
+                    <option value="">Spécialité</option>
+                    @foreach ($specialites as $specialite)
+                        <option value="{{ $specialite->id }}" {{ request('specialite') == $specialite->id ? 'selected' : '' }}>
+                            {{ $specialite->nom }}
+                        </option>
+                    @endforeach
+                </select>
+                
+                <button type="submit" class="search-btn" style="font-weight: bold;">Rechercher</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <main class="main-content">
         @if($offres->isEmpty())
-            <div class="alert alert-info">Aucune offre expirée.</div>
+            <div style="text-align: center; padding: 4rem 0;">
+                <p style="color: var(--gray-500); font-size: 1.125rem;">Aucune offre expirée pour le moment.</p>
+            </div>
         @else
-            <div class="row">
+            <div class="jobs-grid">
                 @foreach($offres as $offre)
-                    <div class="col-md-4 mb-4">
-                        <div class="card shadow-sm">
-                            <div class="card-body">
-                                <h5 class="card-title">{{ $offre->titre }}</h5>
-                                <p class="card-text">{{ Str::limit($offre->description, 100) }}</p>
-                                <p class="card-text"><strong>Type de contrat :</strong> {{ $offre->type_contrat }}</p>
-                                <p class="card-text"><strong>Date d'expiration :</strong> {{ \Carbon\Carbon::parse($offre->date_expiration)->format('d/m/Y') }}</p>
-
-                                <!-- Button to view details -->
-                                <a href="{{ route('offre.detail_rec', $offre->id) }}" class="btn btn-primary">Voir les détails</a>
+                    <div class="job-card">
+                        <div class="job-card-header">
+                            <img src="{{ 'http://localhost/my-pfaRecrutement/public/storage/' . $logo }}" alt="Logo" class="company-logo">
+                            <div class="job-info">
+                                <h3>{{ $offre->titre }}</h3>
+                                <div class="job-meta">
+                                    <span>Expiré le {{ \Carbon\Carbon::parse($offre->date_expiration)->format('d/m/Y') }}</span>
+                                </div>
                             </div>
+                        </div>
+                        <div class="job-actions">
+                            <span class="job-type"></span>
+                            <a href="{{ route('offre.detail_rec', $offre->id) }}" class="view-job-btn">Voir les détails →</a>
                         </div>
                     </div>
                 @endforeach
             </div>
         @endif
-    </div>
+        
+    </main>
+
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
@@ -529,5 +533,3 @@
     </footer>
 </body>
 </html>
-
-

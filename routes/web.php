@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CandidatController;
 use App\Http\Controllers\OffreController;
@@ -8,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CandidatureController;
 use App\Http\Controllers\EntrepriseController;
 use App\Models\Specialite;
-use App\Http\Controllers\SpecialiteController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\EntretienController;
 
 Route::get('/', function () {
@@ -45,7 +46,9 @@ Route::get('/offres/expirées', [OffreController::class, 'showExpiredOffers'])->
 Route::get('/offres/{offre}/edit', [OffreController::class, 'edit'])->name('offres.edit');
 Route::put('/offres/{offre}', [OffreController::class, 'update'])->name('offres.update');
 Route::delete('/offres/{offre}', [App\Http\Controllers\OffreController::class, 'destroy'])->name('offres.destroy');
-Route::put('candidatures/{offre}/{candidat}/updateEtat', [CandidatureController::class, 'updateEtat'])->name('candidatures.updateEtat');
+// Mise à jour de l'état de la candidature
+Route::post('/candidatures/{offre}/{candidat}/updateEtat', [CandidatureController::class, 'updateEtat'])->name('candidatures.updateEtat');
+
 Route::get('/entreprises', [EntrepriseController::class, 'index'])->name('entreprises.index');
 
 Route::get('/api/specialites/by-categorie/{id}', function ($id) {
@@ -76,9 +79,45 @@ Route::post('/changer-mot-de-passe-candidat', [CandidatController::class, 'updat
 Route::put('/candidat/profil/photo/candidat', [CandidatController::class, 'updatePhoto'])->name('candidat.updatePhoto');
 Route::put('/candidat/{id}', [CandidatController::class, 'update'])->name('candidat.update');
 Route::get('/candidat-candidatures', [OffreController::class, 'showCandidatCandidatures'])->name('candidat.candidatures');
-Route::get('/public/storage/{filename}', [App\Http\Controllers\CVController::class, 'show'])->name('cv.show');
+
 
 Route::post('/entretiens', [EntretienController::class, 'store'])->name('entretiens.store');
+Route::delete('/candidatures/{offre}/{candidat}', [CandidatureController::class, 'destroy'])->name('candidatures.destroy');
+Route::post('/candidatures/update/{offreId}/{candidatId}', [CandidatureController::class, 'update'])->name('candidatures.update');
 
+Route::get('/notifications', [EntretienController::class, 'showNotifications'])->name('candidat.notifications');
+Route::get('/candidat/notifications', [EntretienController::class, 'showNotifications']);
 
+Route::get('/public/storage/{filename}', [App\Http\Controllers\CVController::class, 'show'])->name('cv.show');
+
+Route::get('/admin', [AdminController::class, 'index'])->name('Adm.admin');
+
+Route::post('/offres/{id}/approuver', [AdminController::class, 'approve'])->name('offres.approve');
+Route::post('/offres/{id}/refuser', [AdminController::class, 'refuse'])->name('offres.refuse');
+Route::get('/admin/utilisateurs', [AdminController::class, 'utilisateurs'])->name('admin.utilisateurs');
+
+Route::prefix('admin')->group(function () {
+   Route::get('/categories', [AdminController::class, 'showCategories'])->name('admin.categories');
+   Route::post('/categories', [AdminController::class, 'storeCategory'])->name('admin.categories.store');
+   Route::post('/specialites', [AdminController::class, 'storeSpecialite'])->name('admin.specialites.store');
+});
+// Catégorie
+Route::put('/admin/categories/{id}', [AdminController::class, 'updateCategory'])->name('admin.categories.update');
+Route::delete('/admin/categories/delete/{id}', [AdminController::class, 'deleteCategory'])->name('admin.categories.delete');
+
+// Spécialité
+Route::put('/admin/specialites/{id}', [AdminController::class, 'updateSpecialite'])->name('admin.specialites.update');
+Route::delete('/admin/specialites/delete/{id}', [AdminController::class, 'deleteSpecialite'])->name('admin.specialites.delete');
+
+Route::get('/admin/offres/{id}/detail', [AdminController::class, 'showAdmToutesOffres'])->name('detail.offre');
+
+Route::get('/admin/offres', [AdminController::class, 'offres'])->name('Adm.offres');
+Route::post('/admin/utilisateurs/{id}/supprimer', [AdminController::class, 'supprimerUtilisateur'])->name('admin.utilisateurs.supprimer');
+Route::POST('/admin/add', [AdminController::class, 'addAdmin'])->name('admin.add');
+
+Route::get('admin/profile', [AdminController::class, 'profile'])->name('profile');
+Route::put('admin/updateProfile', [AdminController::class, 'updateProfile'])->name('admin.updateProfile');
+Route::post('admin/changePassword', [AdminController::class, 'changePassword'])->name('admin.changePassword');
+
+Route::get('/recruteur/dashboard', [EntretienController::class, 'indexRecruteur'])->name('entretiens.recruteur');
 

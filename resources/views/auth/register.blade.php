@@ -82,12 +82,20 @@
 .form-group input::placeholder {
     color: #9fa0a1;
 }
+
+.ecole-group {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid white;
+        border-radius: 8px;
+        background-color: white;
+    }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="form-container">
-        <h2>Connexion</h2>
+        <h2>Inscription</h2>
             <form action="{{ route('register') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
@@ -160,9 +168,21 @@
                               <option value="{{ $ecole->id }}">{{ $ecole->nom }}</option>
                               @endforeach
                          </select>
-                         <input type="date" name="dates_debut[]" class="form-control mt-2" placeholder="Date de début">
-                         <input type="date" name="dates_fin[]" class="form-control mt-2" placeholder="Date de fin">
-                         <input type="text" name="diplomes[]" class="form-control mt-2" placeholder="Diplôme obtenu">
+                         <div class="mt-2">
+                <label for="date_debut" class="form-label">Date de début</label>
+                <input type="date" name="dates_debut[]" class="form-control" placeholder="Date de début">
+            </div>
+
+            <div class="mt-2">
+                <label for="date_fin" class="form-label">Date de fin</label>
+                <input type="date" name="dates_fin[]" class="form-control" placeholder="Date de fin">
+            </div>
+
+            <div class="mt-2">
+                <label for="diplome" class="form-label">Diplôme obtenu</label>
+                <input type="text" name="diplomes[]" class="form-control" placeholder="Diplôme obtenu">
+            </div>
+                       
                         </div>
                     </div>
                     <button type="button" id="add-ecole" class="btn btn-secondary mt-2">+ Ajouter une école</button>
@@ -251,18 +271,29 @@
                 selectEcole.appendChild(option);
             });
 
-            
+            const labelDebut = document.createElement("label");
+            labelDebut.classList.add("form-label", "mt-2");
+            labelDebut.textContent = "Date de début";
+
             const inputDateDebut = document.createElement("input");
             inputDateDebut.type = "date";
             inputDateDebut.name = "dates_debut[]";
             inputDateDebut.classList.add("form-control", "mt-2");
             inputDateDebut.placeholder = "Date de début";
 
+            const labelFin = document.createElement("label");
+            labelFin.classList.add("form-label", "mt-2");
+            labelFin.textContent = "Date de fin";
+
             const inputDateFin = document.createElement("input");
             inputDateFin.type = "date";
             inputDateFin.name = "dates_fin[]";
             inputDateFin.classList.add("form-control", "mt-2");
             inputDateFin.placeholder = "Date de fin";
+
+            const labelDiplome = document.createElement("label");
+            labelDiplome.classList.add("form-label", "mt-2");
+            labelDiplome.textContent = "Diplôme obtenu";
 
             const inputDiplome = document.createElement("input");
             inputDiplome.type = "text";
@@ -272,8 +303,11 @@
 
             
             newEcoleGroup.appendChild(selectEcole);
+            newEcoleGroup.appendChild(labelDebut);
             newEcoleGroup.appendChild(inputDateDebut);
+            newEcoleGroup.appendChild(labelFin);
             newEcoleGroup.appendChild(inputDateFin);
+            newEcoleGroup.appendChild(labelDiplome);
             newEcoleGroup.appendChild(inputDiplome);
 
             

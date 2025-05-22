@@ -38,8 +38,8 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 1.25rem;
-            font-weight: 600;
+            font-size: 1.30rem;
+            font-weight: bold;
             color: #0066FF;
         }
 
@@ -50,18 +50,19 @@
         }
 
         .nav-links a {
-            color: var(--gray-500);
+            color: black;
             text-decoration: none;
             font-size: 0.875rem;
             transition: color 0.2s;
+            font-weight: bold;
         }
-
+       
         .nav-links a:hover {
             color: var(--gray-700);
         }
         .nav-links a.active {
     color: var(--primary-blue) !important;
-    font-weight: 600;
+    font-weight: bold;
 }
 
         .post-job-btn {
@@ -79,7 +80,13 @@
         }
 
         .hero-section {
-            background: var(--light-blue);
+            width: 100%; /* La largeur sera de 100% de l'écran (ou de son parent) */
+    height: 25vh; /* La hauteur est définie à 50% de la hauteur de l'écran */
+    background: linear-gradient(rgba(41, 98, 255, 0.9), rgba(30, 136, 229, 0.9)), 
+                url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1920&q=80');
+    background-size: cover; /* L'image s'adapte à la taille du conteneur */
+    background-position: center; /* Centrer l'image */
+    background-repeat: no-repeat; /* Éviter de répéter l'image */
             padding: 4rem 0;
             text-align: center;
         }
@@ -92,13 +99,13 @@
 
         .hero-content h1 {
             font-size: 2.5rem;
-            color: var(--gray-700);
+            color: white;
             margin-bottom: 1rem;
             font-weight: 600;
         }
 
         .hero-content p {
-            color: var(--gray-500);
+            color: white;
             font-size: 1.125rem;
             max-width: 600px;
             margin: 0 auto 2rem;
@@ -319,7 +326,7 @@
             color: var(--primary-blue);
             text-decoration: none;
             font-size: 0.875rem;
-            font-weight: 500;
+            font-weight: bold;
         }
 
         .side-panel {
@@ -367,6 +374,7 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 2rem;
+            margin-left: 120px;
         }
 
         .footer-section h4 {
@@ -406,10 +414,11 @@
         .copyright {
             text-align: center;
             padding: 2rem;
-            color: var(--gray-500);
+            color: #2962ff;
             font-size: 0.875rem;
             border-top: 1px solid var(--gray-200);
             margin-top: 2rem;
+            font-weight: bold;
         }
 
         @media (max-width: 768px) {
@@ -439,15 +448,69 @@
                 grid-template-columns: 1fr;
             }
         }
+        .view-all-btn {
+    font-size: 1rem;
+    color: var(--primary-blue);
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.view-all-btn:hover {
+    color: var(--hover-blue);
+}
+
+.job-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #eff6ff;
+  border-radius: 25%;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 15px;
+}
+
+.side-panel h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #111827;
+}
+
+.job-desc {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-bottom: 16px;
+}
+
+.cta-main {
+  display: inline-block;
+  background-color: #2563eb;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.cta-main:hover {
+  background-color: #1e40af;
+}
+
     </style>
 </head>
-<body>
+<b>
     <nav class="navbar">
+
         <div class="logo">
+            
             <span>RecrutPro</span>
         </div>
         <div class="nav-links">
-            
+          
             <a href="{{ route('toutes.offres') }}" 
    class="{{ request()->routeIs('toutes.offres') ? 'active' : '' }}">
    Accueil
@@ -472,23 +535,25 @@
    class="{{ request()->routeIs('recruteur.index') ? 'active' : '' }}">
    Mes Offres
 </a>
-
+       
             <form method="POST" action="{{ route('logout') }}" style="display:inline;">
                 @csrf
-                <button type="submit" style="background:none; border:none; color:var(--gray-500); cursor:pointer; font-size:0.875rem;">
+                <button type="submit" style="background:none; border:none; color:black; font-weight: bold; cursor:pointer; font-size:0.875rem;">
                     Déconnexion
                 </button>
             </form>
-            <a href="{{ route('offres.create') }}" class="post-job-btn">Poster une offre</a>
+            <a href="{{ route('offres.create') }}" class="post-job-btn">Annoncer</a>
         </div>
     </nav>
 
     <div class="hero-section">
         <div class="hero-content">
+      
             <h1>Trouvez les meilleurs talents</h1>
             <p>Publiez vos offres d'emploi et connectez-vous avec des candidats qualifiés.</p>
         </div>
     </div>
+
 
     <div class="search-container">
         <div class="search-section">
@@ -515,7 +580,7 @@
                         </option>
                     @endforeach
                 </select>
-                <button type="submit" class="search-btn">Rechercher</button>
+                <button type="submit" class="search-btn" style="font-weight: bold;">Rechercher</button>
                 </div>
             </form>
         </div>
@@ -528,6 +593,7 @@
             <div class="jobs-list">
                 <div class="jobs-header">
                     <h2>Offres en cours</h2>
+                    <a href="{{ route('toutes.offres', ['voir_tout' => 1]) }}" class="view-all-btn">Voir toutes les offres →</a>
                 </div>
 
                 @forelse ($offres_actives as $offre)
@@ -572,16 +638,34 @@
             </div>
 
             <div class="side-panel">
-            <h3>Postez une offre aujourd'hui</h3>
-<p style="color: var(--gray-500);">Publiez une offre pour trouver des talents.</p>
+  <!-- Icône -->
+  <div class="job-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="#2563eb">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M16 7V5a2 2 0 00-2-2H10a2 2 0 00-2 2v2M4 7h16v12a2 2 0 01-2 2H6a2 2 0 01-2-2V7z" />
+    </svg>
+  </div>
 
-                <button onclick="window.location.href='{{ route('offres.create') }}'" class="post-job-large" >
-                    Poster une offre
-                </button>
-            </div>
-        </div>
-    </div>
+  <!-- Titre -->
+  <h3>Postez une offre aujourd'hui</h3>
 
+  <!-- Description -->
+  <p class="job-desc">Publiez une offre pour trouver des talents.</p>
+
+  <!-- Bouton principal -->
+  <a href="{{ route('offres.create') }}" class="cta-main" style="font-weight: bold;">Annoncer </a>
+
+  
+  
+</div>
+
+
+ </div>
+    
+</div>
+
+
+    
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">

@@ -2,20 +2,28 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>RecrutPro - Recruteur</title>
+    <title>RecrutPro - Centre de Notifications</title>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <style>
         :root {
-            --primary-blue: #0066FF;
+            --primary: #3b82f6;
+            --primary-dark: #1d4ed8;
+            --success: #059669;
+            --success-light: #d1fae5;
+            --success-border: #6ee7b7;
+            --danger: #dc2626;
+            --danger-light: #fee2e2;
+            --danger-border: #fca5a5;
+            --background: #f8fafc;
+            --surface: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
             --light-blue: #f8f9ff;
-            --hover-blue: #0052cc;
-            --white: #ffffff;
-            --gray-100: #f3f4f6;
             --gray-200: #e5e7eb;
-            --gray-300: #d1d5db;
-            --gray-500: #6b7280;
-            --gray-700: #374151;
+            
         }
+
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -24,6 +32,7 @@
             color: var(--gray-700);
             min-height: 100vh;
         }
+
 
         .navbar {
             background: var(--white);
@@ -84,9 +93,9 @@
 }
 
 .notification-btn:hover {
-    background-color: var(--primary-blue);
+    background-color: #0066FF;
     color: white;
-    border-color: var(--primary-blue);
+    border-color: #0066FF;
 }
 
 .notification-btn .icon {
@@ -97,289 +106,143 @@
 .icon {
   stroke: white;
 }
-       
-.hero-section {
-            width: 100%; /* La largeur sera de 100% de l'écran (ou de son parent) */
-    height: 25vh; /* La hauteur est définie à 50% de la hauteur de l'écran */
-    background: linear-gradient(rgba(41, 98, 255, 0.9), rgba(30, 136, 229, 0.9)), 
-                url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1920&q=80');
-    background-size: cover; /* L'image s'adapte à la taille du conteneur */
-    background-position: center; /* Centrer l'image */
-    background-repeat: no-repeat; /* Éviter de répéter l'image */
-            padding: 4rem 0;
-            text-align: center;
-        }
-
-
-        .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .hero-content h1 {
-            font-size: 2.5rem;
-            color: white;
-            margin-bottom: 1rem;
-            font-weight: BOLD;
-        }
-
-        .hero-content p {
-            color: white;
-            font-size: 1.125rem;
-            max-width: 600px;
-            margin: 0 auto 2rem;
-            font-weight: bold;
-        }
-
-        .search-container {
+        .container {
             max-width: 1000px;
-            margin: -2rem auto 0;
-            padding: 0 2rem;
-            position: relative;
-            z-index: 10;
+            margin: 3rem auto;
+            padding: 0 1.5rem;
         }
 
-        .search-section {
-            background: var(--white);
-            padding: 1.5rem;
-            border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        .notifications-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
         }
 
-        .search-form {
+        .page-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text);
+            margin: 0  ;
+            letter-spacing: -0.025em;
+            background: linear-gradient(135deg, #0066FF 0%, #66B2FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .notifications-container {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
             gap: 1rem;
-            align-items: center;
         }
 
-        .search-input {
+        .notification {
+            background: var(--surface);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+            transition: all 0.3s ease;
             position: relative;
-            background: var(--white);
-            border: 1px solid var(--gray-200);
-            border-radius: 0.5rem;
-            display: flex;
-            align-items: center;
-            padding-left: 2.5rem;
-            max-width: 100%;
+            overflow: hidden;
         }
 
-        .search-input::before {
-            content: "🔍";
+        .notification::before {
+            content: '';
             position: absolute;
-            left: 1rem;
-            color: var(--gray-500);
-            font-size: 0.875rem;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            transition: all 0.3s ease;
         }
 
-        .search-input input {
-            width: 100%;
-            padding: 0.75rem;
-            border: none;
-            outline: none;
-            background: transparent;
-            font-size: 0.875rem;
+        .notification:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
-        .search-input .search-btn {
-            margin: 4px;
-            padding: 0.5rem 1.5rem;
-            border-radius: 0.375rem;
-            white-space: nowrap;
-            background: var(--primary-blue);
-            color: var(--white);
-            border: none;
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            
-        }
-        .search-btn {
-            padding: 0.75rem 1.5rem;
-            background: var(--primary-blue);
-            color: var(--white);
-            border: none;
-            border-radius: 0.5rem;
-            font-size: 0.875rem;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            white-space: nowrap;
+        .notification.success {
+            background: var(--success-light);
+            border: 1px solid var(--success-border);
         }
 
-        .search-input .search-btn:hover {
-            background: var(--hover-blue);
+        .notification.success::before {
+            background: var(--success);
         }
 
-        .search-form select {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--gray-200);
-            border-radius: 0.5rem;
-            outline: none;
-            font-size: 0.875rem;
-            color: var(--gray-700);
-            background: var(--white);
-            cursor: pointer;
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-            background-position: right 0.5rem center;
-            background-repeat: no-repeat;
-            background-size: 1.5em 1.5em;
-            padding-right: 2.5rem;
+        .notification.error {
+            background: var(--danger-light);
+            border: 1px solid var(--danger-border);
         }
 
-        .main-content {
-            max-width: 1200px;
-            margin: 4rem auto 0;
-            padding: 0 2rem;
+        .notification.error::before {
+            background: var(--danger);
         }
 
-        .job-categories {
-            display: flex;
-            gap: 1rem;
-            margin: 2rem 0;
-            flex-wrap: wrap;
-        }
-
-        .category-tag {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1rem;
-            background: var(--white);
-            border: 1px solid var(--gray-200);
-            border-radius: 2rem;
-            color: var(--gray-500);
-            font-size: 0.875rem;
-            text-decoration: none;
-            transition: all 0.2s;
-        }
-
-        .category-tag:hover {
-            border-color: var(--primary-blue);
-            color: var(--primary-blue);
-        }
-
-        .jobs-container {
-            display: block;
-        }
-
-        .jobs-list {
-            background: var(--white);
-            padding: 1.5rem;
+        .notification-icon {
+            width: 2.5rem;
+            height: 2.5rem;
             border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-
-        .jobs-header {
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .jobs-header h2 {
+            justify-content: center;
             font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--gray-700);
-            margin: 0;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
         }
 
-        .job-card {
-            border: 1px solid var(--gray-200);
-            border-radius: 0.75rem;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            transition: all 0.2s;
-            background: var(--white);
+        .notification.success .notification-icon {
+            background: var(--success);
+            color: white;
         }
 
-        .job-card:hover {
-            border-color: var(--primary-blue);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        .notification.error .notification-icon {
+            background: var(--danger);
+            color: white;
         }
 
-        .job-card-header {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 1rem;
+        .notification-content {
+            flex: 1;
         }
 
-        .company-logo {
-            width: 48px;
-            height: 48px;
-            border-radius: 0.5rem;
-            object-fit: cover;
+      
+
+        .notification.success .notification-title {
+            color: var(--success);
         }
 
-        .job-info h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--gray-700);
-            margin: 0 0 0.25rem 0;
+        .notification.error .notification-title {
+            color: var(--danger);
         }
 
-        .job-meta {
-            display: flex;
-            gap: 1rem;
-            color: var(--gray-500);
-            font-size: 0.875rem;
-            font-weight: bold;
+      
+
+        .notification-time {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
         }
 
-        .job-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid var(--gray-200);
-        }
-
-        .job-type {
-            color: var(--gray-500);
-            font-size: 0.875rem;
-        }
-
-        .view-job-btn {
-            color: var(--primary-blue);
-            text-decoration: none;
-            font-size: 0.875rem;
-            font-weight: bold;
-
-        }
-
-        .side-panel {
-            background: var(--white);
-            padding: 1.5rem;
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: var(--surface);
             border-radius: 1rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            height: fit-content;
+            border: 2px dashed var(--border);
         }
 
-        .side-panel h3 {
+        .empty-state-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .empty-state-text {
+            color: var(--text-light);
             font-size: 1rem;
-            font-weight: 600;
-            color: var(--gray-700);
-            margin: 0 0 1rem 0;
-        }
-
-        .post-job-large {
-            width: 100%;
-            padding: 0.75rem;
-            background: var(--primary-blue);
-            color: var(--white);
-            border: none;
-            border-radius: 10rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            font-size: 0.95rem;
-        }
-
-        .post-job-large:hover {
-            background: var(--hover-blue);
+            margin: 0;
         }
 
         .footer {
@@ -417,7 +280,7 @@
         }
 
         .footer-section a {
-            color: var(--gray-500);
+            color: #6b7280;
             text-decoration: none;
             font-size: 0.875rem;
             transition: color 0.2s;
@@ -446,51 +309,59 @@
 
 
 
-        @media (max-width: 768px) {
-            .search-form {
-                flex-direction: column;
-            }
 
-            .search-input, .search-form select {
-                width: 100%;
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(1rem);
             }
-
-            .jobs-container {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-content {
-                grid-template-columns: repeat(2, 1fr);
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        @media (max-width: 480px) {
+        .notification {
+            animation: slideIn 0.5s ease-out forwards;
+        }
+
+        @media (max-width: 768px) {
             .nav-links {
                 display: none;
             }
 
+            .container {
+                padding: 0 1rem;
+                margin: 2rem auto;
+            }
+
+            .page-title {
+                font-size: 1.75rem;
+            }
+
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .notification {
+                padding: 1.25rem;
+            }
+
+            .notification-icon {
+                width: 2rem;
+                height: 2rem;
+                font-size: 1rem;
+            }
+
             .footer-content {
                 grid-template-columns: 1fr;
             }
         }
-        .view-all-link {
-    text-align: center;
-    margin-bottom: 2rem;
-}
 
-.view-all-btn {
-    font-size: 1rem;
-    color: var(--primary-blue);
-    font-weight: bold;
-    text-decoration: none;
-    transition: color 0.2s;
-}
-
-.view-all-btn:hover {
-    color: var(--hover-blue);
-    
-}
-
+        
 
 .notifications-dropdown {
     position: absolute;
@@ -514,7 +385,7 @@
     animation: slideDown 0.2s ease-out forwards;
 }
 
-.notifications-header {
+.notifications-header-nav{
     padding: 1rem 1.5rem;
     border-bottom: 1px solid var(--gray-200);
     display: flex;
@@ -522,7 +393,7 @@
     align-items: center;
 }
 
-.notifications-title {
+.notifications-title{
     font-size: 1.1rem;
     font-weight: 600;
     color: var(--gray-700);
@@ -612,13 +483,10 @@
     }
 }
 
-.notification-btn {
-    position: relative;
-}
     </style>
 </head>
 <body>
-    <nav class="navbar">
+<nav class="navbar">
         <div class="logo">
             <span>RecrutPro</span>
         </div>
@@ -656,7 +524,7 @@
 
 </a>
 <div class="notifications-dropdown">
-    <div class="notifications-header">
+    <div class="notifications-header-nav">
         <span class="notifications-title">Notifications</span>
     </div>
     
@@ -715,99 +583,54 @@
         </div>
     </nav>
 
-    <div class="hero-section">
-        <div class="hero-content">
-            <h1>Trouvez votre prochain emploi</h1>
-            <p>Des milliers d'opportunités vous attendent. Découvrez les meilleures offres d'emploi adaptées à votre profil.</p>
+
+    <div class="container">
+        <div class="notifications-header">
+            <h1 class="page-title">Centre de Notifications</h1>
         </div>
-    </div>
 
-    <div class="search-container">
-        <div class="search-section">
-            <form class="search-form" method="GET" action="{{ route('candidat.toutes.offres') }}">
-                <div class="search-input">
-                    <input type="text" name="titre" placeholder="Rechercher une offre..." value="{{ request('titre') }}">
-                   
+        <div class="notifications-container">
+            @if($entretiens->isEmpty() && $candidaturesRefusees->isEmpty())
+                <div class="empty-state">
+                    <div class="empty-state-icon">📬</div>
+                    <p class="empty-state-text">Aucune notification pour le moment</p>
                 </div>
-                <select name="categorie">
-            <option value="">Catégorie</option>
-            @foreach ($categories as $categorie)
-                <option value="{{ $categorie->id }}" {{ request('categorie') == $categorie->id ? 'selected' : '' }}>
-                    {{ $categorie->nom }}
-                </option>
-            @endforeach
-         </select>
-
-                <div class="specialite-search-group">
-                <select name="specialite">
-                    <option value="">Spécialité</option>
-                    @foreach ($specialites as $specialite)
-                        <option value="{{ $specialite->id }}" {{ request('specialite') == $specialite->id ? 'selected' : '' }}>
-                            {{ $specialite->nom }}
-                        </option>
-                    @endforeach
-                </select>
-                <button type="submit" class="search-btn">Rechercher</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div class="main-content">
-       
-
-        <div class="jobs-container">
-            <div class="jobs-list">
-                <div class="jobs-header">
-                    <h2>Offres en cours</h2>
-                    <a href="{{ route('candidat.toutes.offres', ['voir_toutes' => 1]) }}" class="view-all-btn">Voir toutes les offres →</a>
-                </div>
-
-                @forelse ($offres_actives as $offre)
-                    <div class="job-card">
-                        <div class="job-card-header">
-                      
-                        
-                        <img src="{{ 'http://localhost/my-pfaRecrutement/public/storage/' . $offre->recruteur->logo }}" alt="Logo" class="company-logo">
-                            <div class="job-info">
-                                <h3>{{ $offre->titre }}</h3>
-                                <div class="job-meta">
-                                    <span>{{ $offre->type_contrat }}</span>
-                                    @foreach ($offre->specialites as $specialite)
-                                        <span>{{ $specialite->nom }}@if (!$loop->last), @endif</span>
-                                    @endforeach
-                                </div>
+            @else
+                @foreach($entretiens as $entretien)
+                    <div class="notification success">
+                        <div class="notification-icon">✓</div>
+                        <div class="notification-content">
+                            <div class="notification-title">Entretien Confirmé</div>
+                            <div class="notification-message">
+                                Félicitations ! Vous avez été sélectionné(e) pour un entretien concernant le poste <strong>{{ $entretien->offre->titre }}</strong>. 
+                                Consultez votre email pour les détails de l'entretien.
+                            </div>
+                            <div class="notification-time">
+                                {{ \Carbon\Carbon::parse($entretien->created_at)->diffForHumans() }}
                             </div>
                         </div>
-                        <div class="job-actions">
-                            <span class="job-type"></span>
-                            <a href="{{ route('offre.toutes_offres_detail_candidat', $offre->id) }}" class="view-job-btn">Voir les détails →</a>
+                    </div>
+                @endforeach
+
+                @foreach($candidaturesRefusees as $candidature)
+                    <div class="notification error">
+                        <div class="notification-icon">×</div>
+                        <div class="notification-content">
+                            <div class="notification-title">Candidature Non Retenue</div>
+                            <div class="notification-message">
+                                Votre candidature pour le poste <strong>{{ $candidature->offre->titre }}</strong> n'a malheureusement pas été retenue.
+                                Nous vous encourageons à postuler à d'autres offres correspondant à votre profil.
+                            </div>
+                            <div class="notification-time">
+                                {{ \Carbon\Carbon::parse($candidature->updated_at)->diffForHumans() }}
+                            </div>
                         </div>
                     </div>
-                @empty
-                    <p>Aucune offre en cours</p>
-                @endforelse
-
-                <div class="jobs-header" style="margin-top: 2rem;">
-                    
-                    
-                </div>
-
-                
-                    
-                        <div class="job-card-header">
-                           
-                            
-                        </div>
-                        
-                    
-              
-            </div>
-
-            
+                @endforeach
+            @endif
         </div>
     </div>
-    
+
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-section">
@@ -851,7 +674,7 @@
             &copy; {{ date('Y') }} RecrutPro. Tous droits réservés.
         </div>
     </footer>
-
+    
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const notificationBtn = document.querySelector('.notification-btn');

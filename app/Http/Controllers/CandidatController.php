@@ -8,6 +8,8 @@ use App\Models\Categorie;
 use App\Models\User;
 use App\Models\Ecole;
 use App\Models\Specialite;
+use App\Models\Entretien;
+use App\Models\Candidature;
 use App\Models\Candidat;
 use App\Models\Recruteur;
 use Illuminate\Support\Facades\Storage;
@@ -27,7 +29,8 @@ class CandidatController
     
         // Définir la requête des offres actives
         $offres_actives = Offre::with('recruteur') // Charger le recruteur pour accéder au logo
-            ->whereDate('date_expiration', '>=', $aujourdhui);
+        ->where('statut', 'approuvé') // <-- Ajouter la condition pour le statut
+        ->whereDate('date_expiration', '>=', $aujourdhui);
     
         // Filtrer selon les critères fournis
         if ($request->filled('titre')) {
@@ -58,11 +61,26 @@ class CandidatController
             // Limiter à un certain nombre d'offres (par exemple 5)
             $offres_actives = $offres_actives->limit(3)->get();
         }
+        $user = auth()->user();
+
+        $entretiens = Entretien::where('candidat_id', $user->id)
+        ->where('etat', 'Planifié')
+        ->where('date_heure', '>=', now())
+        ->with('offre') // Si relation définie (recommandé)
+        ->get();
+
+    // ❌ Candidatures refusées
+    $candidaturesRefusees = Candidature::where('candidat_id', $user->id)
+        ->where('etat', 'Refusé')
+        ->with('offre') // Si relation définie
+        ->get();
     
         return view('Can.candidat', [
             'offres_actives' => $offres_actives,
             'categories' => $categories,
-            'specialites' => $specialites
+            'specialites' => $specialites,
+            'entretiens' => $entretiens,
+            'candidaturesRefusees' => $candidaturesRefusees,
         ]);
     }
     
@@ -83,12 +101,30 @@ class CandidatController
 public function showCanToutesOffres($id)
 {
     $offre = Offre::findOrFail($id);
-   
+    $candidat = Candidat::where('user_id', auth()->user()->id)->first();
+    
+    $user = User::find(auth()->id());
+    $entretiens = Entretien::where('candidat_id', $user->id)
+        ->where('etat', 'Planifié')
+        ->where('date_heure', '>=', now())
+        ->with('offre') 
+        ->get();
+
+    $candidaturesRefusees = Candidature::where('candidat_id', $user->id)
+        ->where('etat', 'Refusé')
+        ->with('offre') 
+        ->get();
+
+    if ($candidat) {
+      
+        $logo = $candidat->logo;
+    }
     return view('Can.offre_detail_toutes_offres_candidat', [
         'offre' =>  $offre,
-       
+        'logo' => $logo,
+        'entretiens' => $entretiens,
+        'candidaturesRefusees' => $candidaturesRefusees
     ]);
-   
 }
 
 public function showProfil()
@@ -97,9 +133,18 @@ public function showProfil()
 
     $candidat = Candidat::with('ecoles')->where('user_id', $user->id)->first();
 
-  
+    $entretiens = Entretien::where('candidat_id', $user->id)
+        ->where('etat', 'Planifié')
+        ->where('date_heure', '>=', now())
+        ->with('offre') 
+        ->get();
 
-    return view('Can.profil', compact('user', 'candidat'));
+    $candidaturesRefusees = Candidature::where('candidat_id', $user->id)
+        ->where('etat', 'Refusé')
+        ->with('offre') 
+        ->get();
+
+    return view('Can.profil', compact('user', 'candidat','entretiens','candidaturesRefusees'));
 }
 
 public function edit($id)
@@ -112,9 +157,20 @@ public function edit($id)
 
     // Récupérer les écoles et les diplômes associés au candidat
     $ecolesActuelles = $user->candidat->ecoles()->withPivot('diplome')->get();
+   
+    $entretiens = Entretien::where('candidat_id', $user->id)
+    ->where('etat', 'Planifié')
+    ->where('date_heure', '>=', now())
+    ->with('offre') 
+    ->get();
+
+$candidaturesRefusees = Candidature::where('candidat_id', $user->id)
+    ->where('etat', 'Refusé')
+    ->with('offre') 
+    ->get();
 
     // Retourner la vue avec ces informations
-    return view('Can.edit', compact('user', 'ecoles', 'ecolesActuelles'));
+    return view('Can.edit', compact('user', 'ecoles', 'ecolesActuelles','entretiens','candidaturesRefusees'));
 }
 
 public function editPassword()

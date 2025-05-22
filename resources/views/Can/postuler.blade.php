@@ -33,7 +33,7 @@
                 <label for="cv">Téléchargez votre CV</label>
                 <input type="file" name="cv" id="cv" class="form-control">
             </div>
-            <button type="submit" class="btn btn-primary">Postuler</button>
+            <button type="submit" class="btn btn-primary">Envoyer</button>
         </form>
     </div>
 

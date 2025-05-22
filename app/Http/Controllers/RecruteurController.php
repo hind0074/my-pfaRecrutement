@@ -33,9 +33,11 @@ class RecruteurController
             $logo = $recruteur->logo;
     
             // Requête de base pour les offres actives
-            $offresQuery = Offre::where('recruteur_id', $recruteur->user_id)
+          
+                $offresQuery = Offre::where('recruteur_id', $recruteur->user_id)
+                ->where('statut', 'approuvé')
                 ->whereDate('date_expiration', '>=', $aujourdhui);
-    
+
                 if ($request->filled('titre')) {
                     $offresQuery->where('description', 'LIKE', '%' . $request->titre . '%');
                 }
@@ -57,22 +59,45 @@ class RecruteurController
                     $query->where('categorie_id', $request->categorie);
                 });
             }
+            if ($request->input('voir_toutes_actives')) {
+                $offres_actives = $offresQuery->orderBy('created_at', 'desc')->get();
+            } else {
+                $offres_actives = $offresQuery->orderBy('created_at', 'desc')->take(2)->get();
+            }
             
     
-            $offres_actives = $offresQuery->get();
+            //$offres_actives = $offresQuery->get();
     
             // Offres expirées (non filtrées ici, mais tu peux aussi ajouter un filtre si tu veux)
-            $offres_expirees = Offre::where('recruteur_id', $recruteur->user_id)
-                ->whereDate('date_expiration', '<', $aujourdhui)
-                ->get();
-        }
+            $offresExpireesQuery = Offre::where('recruteur_id', $recruteur->user_id)
+            ->where('statut', 'approuvé') // <-- même chose ici pour les expirées si tu veux
+            ->whereDate('date_expiration', '<', $aujourdhui);
+
+            if ($request->input('voir_toutes_expirees')) {
+                $offres_expirees = $offresExpireesQuery->orderBy('created_at', 'desc')->get();
+            } else {
+                $offres_expirees = $offresExpireesQuery->orderBy('created_at', 'desc')->take(2)->get();
+            }
     
+
+            $offresEnAttenteQuery = Offre::where('recruteur_id', $recruteur->user_id)
+                          ->where('statut', 'en attente')
+                          ->latest();
+
+            if ($request->input('voir_toutes_attente')) {
+            $offres_en_attente = $offresEnAttenteQuery->orderBy('created_at', 'desc')->get();
+            } else {
+            $offres_en_attente = $offresEnAttenteQuery->orderBy('created_at', 'desc')->take(2)->get();
+            }
+        }
+
         return view('Rec.recruteur', [
             'offres_actives' => $offres_actives,
             'offres_expirees' => $offres_expirees,
             'logo' => $logo,
             'categories' => $categories,
-            'specialites' => $specialites
+            'specialites' => $specialites,
+            'offres_en_attente' => $offres_en_attente,
         ]);
     }
     
@@ -84,7 +109,8 @@ class RecruteurController
     $specialites = Specialite::all();
 
     $offres_actives = Offre::with('recruteur') 
-        ->whereDate('date_expiration', '>=', $aujourdhui);
+    ->where('statut', 'approuvé') // <-- Ajouter la condition pour le statut
+    ->whereDate('date_expiration', '>=', $aujourdhui);
 
     if ($request->filled('titre')) {
         $offres_actives->where('description', 'LIKE', '%' . $request->titre . '%');
@@ -106,12 +132,17 @@ class RecruteurController
             $query->where('categorie_id', $request->categorie);
         });
     } 
+    if (!$request->has('voir_tout')) {
+        $offres_actives = $offres_actives->limit(3);
+    }
+
     $offres_actives = $offres_actives->get();
 
     return view('Rec.toutes_offres', [
         'offres_actives' => $offres_actives,
         'categories' => $categories,
-        'specialites' => $specialites
+        'specialites' => $specialites,
+        'voir_tout' => $request->has('voir_tout')
     ]);
 }
 

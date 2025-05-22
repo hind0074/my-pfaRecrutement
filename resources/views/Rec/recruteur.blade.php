@@ -38,7 +38,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 1.25rem;
+            font-size: 1.30rem;
             font-weight: 600;
             color:  #0066FF;
         }
@@ -50,10 +50,11 @@
         }
 
         .nav-links a {
-            color: var(--gray-500);
+            color: black;
             text-decoration: none;
             font-size: 0.875rem;
             transition: color 0.2s;
+            font-weight: bold;
         }
 
         .nav-links a:hover {
@@ -61,7 +62,7 @@
         }
 
         .post-job-btn {
-            background: var(--primary-blue);
+            background:  #0066FF;
             color: var(--white) !important;
             padding: 0.5rem 1rem;
             border-radius: 5rem;
@@ -75,7 +76,13 @@
         }
 
         .hero-section {
-            background: var(--light-blue);
+            width: 100%; /* La largeur sera de 100% de l'écran (ou de son parent) */
+    height: 25vh; /* La hauteur est définie à 50% de la hauteur de l'écran */
+    background: linear-gradient(rgba(41, 98, 255, 0.9), rgba(30, 136, 229, 0.9)), 
+                url('https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1920&q=80');
+    background-size: cover; /* L'image s'adapte à la taille du conteneur */
+    background-position: center; /* Centrer l'image */
+    background-repeat: no-repeat; /* Éviter de répéter l'image */
             padding: 4rem 0;
             text-align: center;
         }
@@ -88,16 +95,17 @@
 
         .hero-content h1 {
             font-size: 2.5rem;
-            color: var(--gray-700);
+            color:white;
             margin-bottom: 1rem;
             font-weight: 600;
         }
 
         .hero-content p {
-            color: var(--gray-500);
+            color: white;
             font-size: 1.125rem;
             max-width: 600px;
             margin: 0 auto 2rem;
+            font-weight: bold;
         }
 
         .search-container {
@@ -314,9 +322,19 @@
             color: var(--primary-blue);
             text-decoration: none;
             font-size: 0.875rem;
-            font-weight: 500;
+            font-weight: bold;
         }
+        .view-all-btn {
+    font-size: 1rem;
+    color: var(--primary-blue);
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.2s;
+}
 
+.view-all-btn:hover {
+    color: var(--hover-blue);
+}
         .side-panel {
             background: var(--white);
             padding: 1.5rem;
@@ -325,12 +343,46 @@
             height: fit-content;
         }
 
-        .side-panel h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: var(--gray-700);
-            margin: 0 0 1rem 0;
-        }
+
+        .job-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #eff6ff;
+  border-radius: 25%;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 15px;
+}
+
+.side-panel h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #111827;
+}
+
+.job-desc {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin-bottom: 16px;
+}
+
+.cta-main {
+  display: inline-block;
+  background-color: #2563eb;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 9999px;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s ease;
+}
+
+.cta-main:hover {
+  background-color: #1e40af;
+}
 
         .post-job-large {
             width: 100%;
@@ -361,8 +413,10 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 2rem;
+            margin-left: 120px;
         }
 
+      
         .footer-section h4 {
             font-size: 1rem;
             font-weight: 600;
@@ -385,6 +439,7 @@
             text-decoration: none;
             font-size: 0.875rem;
             transition: color 0.2s;
+            font-weight: bold;
         }
 
         .footer-section a:hover {
@@ -400,11 +455,13 @@
         .copyright {
             text-align: center;
             padding: 2rem;
-            color: var(--gray-500);
+            color: #2962ff;
             font-size: 0.875rem;
             border-top: 1px solid var(--gray-200);
             margin-top: 2rem;
+            font-weight: bold;
         }
+
 
         @media (max-width: 768px) {
             .search-form {
@@ -472,11 +529,11 @@
 
             <form method="POST" action="{{ route('logout') }}" style="display:inline;">
                 @csrf
-                <button type="submit" style="background:none; border:none; color:var(--gray-500); cursor:pointer; font-size:0.875rem;">
+                <button type="submit" style="background:none; border:none; color:black; cursor:pointer; font-size:0.875rem; font-weight: bold;">
                     Déconnexion
                 </button>
             </form>
-            <a href="{{ route('offres.create') }}" class="post-job-btn">Poster une offre</a>
+            <a href="{{ route('offres.create') }}" class="post-job-btn">Annoncer</a>
         </div>
     </nav>
 
@@ -513,7 +570,7 @@
                     @endforeach
                 </select>
                 
-                <button type="submit" class="search-btn">Rechercher</button>
+                <button type="submit" class="search-btn" style="font-weight: bold;">Rechercher</button>
                 </div>
             </form>
         </div>
@@ -525,7 +582,11 @@
         <div class="jobs-container">
             <div class="jobs-list">
                 <div class="jobs-header">
-                    <h2>Offres en cours</h2>
+                    <h2 style="color: #0066FF">Offres en cours</h2>
+                
+              @if($offres_actives->count() > 0)
+              <a href="{{ route('recruteur.index', ['voir_toutes_actives' => true]) }}" class="view-job-btn" style=" font-size:0.98rem;">Voir tout →</a>
+              @endif
                 </div>
 
                 @forelse ($offres_actives as $offre)
@@ -552,10 +613,43 @@
                 @endforelse
 
                 <div class="jobs-header" style="margin-top: 2rem;">
-                    <h2>Offres expirées</h2>
-                    <a href="{{ route('offres.expirees') }}" style="color: var(--primary-blue); text-decoration: none; font-size: 0.875rem;">
-                        Voir tout →
-                    </a>
+    <h2 style="color: #0066FF">Offres en attente d''approbation</h2>
+    @if($offres_en_attente->count() > 0)
+              <a href="{{ route('recruteur.index', ['voir_toutes_attente' => true]) }}" class="view-job-btn" style=" font-size:0.98rem;">Voir tout →</a>
+              @endif
+</div>
+
+@forelse ($offres_en_attente as $offre)
+    <div class="job-card" >
+        <div class="job-card-header">
+            <img src="{{ 'http://localhost/my-pfaRecrutement/public/storage/' . $logo }}" alt="Logo" class="company-logo">
+            <div class="job-info">
+                <h3>{{ $offre->titre }}</h3>
+                <div class="job-meta">
+                    <span>{{ $offre->type_contrat }}</span>
+                    @foreach ($offre->specialites as $specialite)
+                        <span>{{ $specialite->nom }}@if (!$loop->last), @endif</span>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        <div class="job-actions">
+            <span class="job-type" style="color: var(--gray-500);">En attente d'approbation</span>
+            <a href="{{ route('offre.detail_rec', $offre->id) }}" class="view-job-btn">Voir les détails →</a>
+        </div>
+    </div>
+@empty
+    <p>Aucune offre en attente d'approbation</p>
+@endforelse
+
+
+
+                <div class="jobs-header" style="margin-top: 2rem;">
+                    <h2 style="color: #0066FF">Offres expirées</h2>
+                  
+                    @if($offres_expirees->count() > 0)
+              <a href="{{ route('recruteur.index', ['voir_toutes_expirees' => true]) }}" class="view-job-btn" style=" font-size:0.98rem;">Voir tout →</a>
+              @endif
                 </div>
 
                 @foreach ($offres_expirees->take(3) as $offre)
@@ -578,11 +672,26 @@
             </div>
 
             <div class="side-panel">
-                <h3>Ajouter une nouvelle offre</h3>
-                <button onclick="window.location.href='{{ route('offres.create') }}'" class="post-job-large">
-                    Poster une offre
-                </button>
-            </div>
+  <!-- Icône -->
+  <div class="job-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" stroke="#2563eb">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M16 7V5a2 2 0 00-2-2H10a2 2 0 00-2 2v2M4 7h16v12a2 2 0 01-2 2H6a2 2 0 01-2-2V7z" />
+    </svg>
+  </div>
+
+  <!-- Titre -->
+  <h3>Postez une offre aujourd'hui</h3>
+
+  <!-- Description -->
+  <p class="job-desc">Publiez une offre pour trouver des talents.</p>
+
+  <!-- Bouton principal -->
+  <a href="{{ route('offres.create') }}" class="cta-main" style="font-weight: bold;">Annoncer </a>
+
+  
+  
+</div>
         </div>
     </div>
 

@@ -7,7 +7,7 @@
     <style>
         :root {
             --primary: #4F46E5;
-            --primary-dark: #4338CA;
+            --primary-dark: #0052cc;
             --secondary: #10B981;
             --secondary-dark: #059669;
             --danger: #EF4444;
@@ -28,18 +28,16 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--background);
+            background:#f8f9ff;
             color: var(--gray-800);
             margin: 0;
             min-height: 100vh;
             line-height: 1.5;
         }
 
-       
-
         .navbar {
             background: var(--white);
-            padding: 1rem 2rem;
+            padding: 0.75rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -47,34 +45,33 @@
         }
 
         .navbar .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 1.25rem;
+            font-size: 1.30rem;
             font-weight: 600;
-            color: #0066FF;
+            color:  #0066FF;
         }
 
         .nav-links {
             display: flex;
             align-items: center;
-            gap: 2rem;
+            gap: 1.5rem;
         }
 
         .nav-links a {
-            color: var(--gray-500);
+            color: black;
             text-decoration: none;
             font-size: 0.875rem;
             transition: color 0.2s;
+            font-weight: bold;
         }
 
         .nav-links a:hover {
-            color: #0066FF;
+            color: var(--gray-700);
         }
+
         .nav-links a.active {
-    color: #0066FF !important;
-    font-weight: 600;
-}
+            color:  #0066FF;
+            font-weight: 600;
+        }
 .notification-btn {
     display: inline-flex;
     align-items: center;
@@ -82,7 +79,7 @@
     width: 33px;
     height: 33px;
     border-radius: 50%;
-    background-color: blue;
+    background-color: #0066FF;
     border: 1px solid var(--gray-200);
     color: var(--primary-blue);
     transition: all 0.3s ease;
@@ -164,8 +161,8 @@
         }
 
         .section-title {
-            font-size: 1rem;
-            font-weight: 600;
+            font-size: 1.1rem;
+            font-weight: Bold;
             color: #0066FF;
             margin-bottom: 1.5rem;
         }
@@ -183,8 +180,8 @@
         .form-label {
             display: block;
             font-size: 0.875rem;
-            font-weight: 500;
-            color: var(--gray-700);
+            font-weight: bold;
+            color: var(--gray-500);
             margin-bottom: 0.5rem;
         }
 
@@ -417,6 +414,129 @@
     color: #333;
 }
 
+.notifications-dropdown {
+    position: absolute;
+    top: calc(8% + 1rem);
+    right:0.3rem;
+    width: 400px;
+    background: white;
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border: 1px solid var(--gray-200);
+    z-index: 50;
+    max-height: 500px;
+    overflow-y: auto;
+    display: none;
+    
+
+}
+
+.notifications-dropdown.active {
+    display: block;
+    animation: slideDown 0.2s ease-out forwards;
+}
+
+.notifications-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--gray-200);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notifications-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--gray-700);
+}
+
+.notification-item {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--gray-200);
+    transition: all 0.2s;
+    
+}
+
+.notification-item:hover {
+    background: var(--light-blue);
+}
+
+.notification-item.success {
+    border-left: 4px solid #10B981;
+}
+
+.notification-item.error {
+    border-left: 4px solid #EF4444;
+}
+
+.notification-content {
+    margin-bottom: 0.5rem;
+}
+
+.notification-title {
+    font-weight: 600;
+    color: var(--gray-700);
+    margin-bottom: 0.25rem;
+}
+
+.notification-message {
+    font-size: 0.875rem;
+    color: var(--gray-500);
+}
+
+.notification-time {
+    font-size: 0.75rem;
+    color: var(--gray-400);
+}
+
+.notifications-footer {
+    padding: 1rem 1.5rem;
+    text-align: center;
+    border-top: 1px solid var(--gray-200);
+}
+
+.view-all-notifications {
+    color: var(--primary-blue);
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.875rem;
+    transition: color 0.2s;
+}
+
+.view-all-notifications:hover {
+    color: var(--hover-blue);
+}
+
+.notification-badge {
+    position: absolute;
+    top: 7px;
+    right: 27px;
+    background: #EF4444;
+    color: white;
+    border-radius: 50%;
+    width: 19px;
+    height: 19px;
+    font-size: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.notification-btn {
+    position: relative;
+}
     </style>
 </head>
 <body>
@@ -438,14 +558,14 @@
 
 <a href="{{ route('candidat.profil') }}" class='active'>Mon Profil</a>
 
-<a href="{{ route('candidatures.candidat') }}" 
-   class="{{ request()->routeIs('candidatures.candidat') ? 'active' : '' }}">
+<a href="{{ route('candidat.candidatures') }}" 
+   class="{{ request()->routeIs('candidat.candidatures') ? 'active' : '' }}">
    Mes Candidatures
 </a>
 
             <form method="POST" action="{{ route('logout') }}" style="display:inline;">
                 @csrf
-                <button type="submit" style="background:none; border:none; color:var(--gray-500); cursor:pointer; font-size:0.875rem;">
+                <button type="submit" style="background:none; border:none; color:black; cursor:pointer; font-size:0.875rem; font-weight: bold;">
                     Déconnexion
                 </button>
             </form>
@@ -455,6 +575,62 @@
               d="M15 17h5l-1.405-1.405M4 17h5l-1.405-1.405M18 8a6 6 0 00-12 0v5a2 2 0 01-2 2h16a2 2 0 01-2-2V8z" />
     </svg>
 </a>
+
+<div class="notifications-dropdown">
+    <div class="notifications-header">
+        <span class="notifications-title">Notifications</span>
+    </div>
+    
+    @if($entretiens->isEmpty() && $candidaturesRefusees->isEmpty())
+        <div class="notification-item">
+            <div class="notification-content">
+                <div class="notification-message">Aucune notification pour le moment</div>
+            </div>
+        </div>
+    @else
+        @foreach($entretiens as $entretien)
+            <div class="notification-item success">
+                <div class="notification-content">
+                    <div class="notification-title">Entretien Confirmé</div>
+                    <div class="notification-message">
+                        Félicitations ! Vous avez été sélectionné(e) pour un entretien concernant le poste <strong>{{ $entretien->offre->titre }}</strong>.
+                    </div>
+                </div>
+                <div class="notification-time">
+                    {{ \Carbon\Carbon::parse($entretien->created_at)->diffForHumans() }}
+                </div>
+            </div>
+        @endforeach
+
+        @foreach($candidaturesRefusees as $candidature)
+            <div class="notification-item error">
+                <div class="notification-content">
+                    <div class="notification-title">Candidature Non Retenue</div>
+                    <div class="notification-message">
+                        Votre candidature pour le poste <strong>{{ $candidature->offre->titre }}</strong> n'a pas été retenue.
+                    </div>
+                </div>
+                <div class="notification-time">
+                    {{ \Carbon\Carbon::parse($candidature->updated_at)->diffForHumans() }}
+                </div>
+            </div>
+        @endforeach
+    @endif
+    
+    <div class="notifications-footer">
+        <a href="{{ route('candidat.notifications') }}" class="view-all-notifications">
+            Voir toutes les notifications →
+        </a>
+    </div>
+</div>
+
+<!-- Add this to your notification button -->
+@if(($entretiens->count() + $candidaturesRefusees->count()) > 0)
+    <div class="notification-badge">
+        {{ $entretiens->count() + $candidaturesRefusees->count() }}
+    </div>
+@endif
+
 
 
         </div>
@@ -541,10 +717,13 @@
 
                     <div class="form-section">
                         <h3 class="section-title">Formation</h3>
+                        
                         <div class="ecoles-section">
                             <div id="ecoles-container">
+                                
                                 @foreach($ecolesActuelles as $ecole)
                                 <div class="ecole-group">
+                                
                                     <select name="ecoles[]" class="form-control">
                                         <option value="selectionner">Sélectionner une école</option>
                                         @foreach($ecoles as $ecoleOption)
@@ -556,19 +735,19 @@
                                     <input type="date" name="dates_debut[]" class="form-control" value="{{ $ecole->pivot->date_debut }}">
                                     <input type="date" name="dates_fin[]" class="form-control" value="{{ $ecole->pivot->date_fin }}">
                                     <input type="text" name="diplomes[]" class="form-control" placeholder="Diplôme obtenu" value="{{ $ecole->pivot->diplome }}">
-                                    <button type="button" class="btn btn-danger" onclick="removeEcole(this)">Supprimer</button>
+                                    <button type="button" class="btn btn-danger" onclick="removeEcole(this)" style="font-weight: bold;">Supprimer</button>
                                 </div>
                                 @endforeach
                             </div>
-                            <button type="button" id="add-ecole" class="btn btn-secondary">
+                            <button type="button" id="add-ecole" class="btn btn-secondary" style="font-weight: bold; color: #0066FF; font-size: 0.9rem;">
                                 + Ajouter une école
                             </button>
                         </div>
                     </div>
 
                     <div class="form-actions">
-                        <a href="{{ route('candidat.profil') }}" class="btn btn-secondary">Annuler</a>
-                        <button type="submit" class="btn btn-primary">Enregistrer les modifications</button>
+                        <a href="{{ route('candidat.profil') }}" class="btn btn-secondary" style="font-weight: bold;">Annuler</a>
+                        <button type="submit" class="btn btn-primary" style="font-weight: bold;">Enregistrer les modifications</button>
                     </div>
                 </div>
             </form>
@@ -695,5 +874,23 @@
     });
 </script>
 
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const notificationBtn = document.querySelector('.notification-btn');
+    const notificationsDropdown = document.querySelector('.notifications-dropdown');
+    
+    notificationBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        notificationsDropdown.classList.toggle('active');
+        e.stopPropagation();
+    });
+
+    document.addEventListener('click', function(e) {
+        if (!notificationsDropdown.contains(e.target) && !notificationBtn.contains(e.target)) {
+            notificationsDropdown.classList.remove('active');
+        }
+    });
+});
+</script>
 </body>
 </html>
